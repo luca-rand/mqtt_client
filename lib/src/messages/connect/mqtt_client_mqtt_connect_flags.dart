@@ -5,7 +5,9 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../mqtt_client_mqtt_qos.dart';
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../../utility/mqtt_client_utilities.dart';
 
 /// Represents the connect flags part of the MQTT Variable Header
 class MqttConnectFlags {

@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import './observable/observable.dart' as observe;
 
 /// Represents a MQTT message that has been received from a broker.
 class MqttReceivedMessage<T> extends observe.ChangeRecord {

@@ -5,7 +5,15 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+
+import '../messages/mqtt_client_mqtt_message.dart';
+import '../messages/mqtt_client_mqtt_message_type.dart';
+import '../messages/pingrequest/mqtt_client_mqtt_ping_request_message.dart';
+import '../messages/pingresponse/mqtt_client_mqtt_ping_response_message.dart';
+import './mqtt_client_connection_state.dart';
+import './mqtt_client_imqtt_connection_handler.dart';
+import './mqtt_client_mqtt_connection_handler.dart';
 
 /// Ping response received callback
 typedef PongCallback = void Function();

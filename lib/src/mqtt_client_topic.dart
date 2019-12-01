@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Provides the base implementation of an MQTT topic.
 abstract class Topic {
   /// Creates a new instance of a rawTopic from a rawTopic string.

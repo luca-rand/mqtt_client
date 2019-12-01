@@ -5,7 +5,10 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../exception/mqtt_client_invalid_message_exception.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import './mqtt_client_mqtt_header.dart';
+import './mqtt_client_mqtt_message_factory.dart';
 
 /// Represents an MQTT message that contains a fixed header, variable header and message body.
 /// Messages roughly look as follows.

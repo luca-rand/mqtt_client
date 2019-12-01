@@ -5,7 +5,11 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../encoding/mqtt_client_mqtt_encoding.dart';
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_payload.dart';
+import '../mqtt_client_mqtt_variable_header.dart';
 
 /// Class that contains details related to an MQTT Unsubscribe messages payload
 class MqttUnsubscribePayload extends MqttPayload {

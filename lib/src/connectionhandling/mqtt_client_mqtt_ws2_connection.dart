@@ -6,7 +6,42 @@
  * 01/19/2019 : Don Edvalson - Added this alternate websocket class to work around AWS deficiencies.
  */
 
-part of mqtt_client;
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:crypto/crypto.dart';
+import 'package:event_bus/event_bus.dart' as events;
+import 'package:typed_data/typed_data.dart' as typed;
+import '../exception/mqtt_client_noconnection_exception.dart';
+import '../mqtt_client_connection_status.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import '../utility/mqtt_client_logger.dart';
+import './mqtt_client_mqtt_connection.dart';
+import './mqtt_client_socket.dart';
+
+/// The [WebSocket] implementation of [MqttSocket]
+class MqttWebSocket2 implements MqttSocket {
+  /// Default constructor
+  MqttWebSocket2(this.webSocket);
+
+  /// The secure socket to use for communication
+  WebSocket webSocket;
+
+  /// Listen for messages on the socket
+  @override
+  StreamSubscription<Uint8List> listen(void Function(List<int>) onData,
+          {void Function(dynamic) onError, void Function() onDone}) =>
+      webSocket.listen(onData, onError: onError, onDone: onDone);
+
+  /// Add data to the socket
+  @override
+  void add(List<int> data) => webSocket.add(data);
+
+  /// Close the socket
+  @override
+  Future<dynamic> close() => webSocket.close();
+}
 
 class _DetachedSocket extends Stream<Uint8List> implements Socket {
   _DetachedSocket(this._socket, this._subscription);
@@ -151,16 +186,16 @@ class MqttWs2Connection extends MqttConnection {
           .then((Socket socket) {
         MqttLogger.log('MqttWs2Connection::connect - securing socket');
         _performWSHandshake(socket, uri).then((bool b) {
-          client = WebSocket.fromUpgradedSocket(
+          client = MqttWebSocket2(WebSocket.fromUpgradedSocket(
               _DetachedSocket(socket, _subscription),
-              serverSide: false);
+              serverSide: false));
           readWrapper = ReadWrapper();
           messageStream = MqttByteBuffer(typed.Uint8Buffer());
           MqttLogger.log('MqttWs2Connection::connect - start listening');
-          _startListening();
+          startListening();
           completer.complete();
         }).catchError((dynamic e) {
-          _onError(e);
+          onError(e);
           completer.completeError(e);
         });
       });

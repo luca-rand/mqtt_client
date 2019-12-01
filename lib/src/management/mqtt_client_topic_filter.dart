@@ -5,7 +5,12 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+import '../messages/mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_received_message.dart';
+import '../mqtt_client_publication_topic.dart';
+import '../mqtt_client_subscription_topic.dart';
+import '../utility/mqtt_client_logger.dart';
 
 /// This class allows specific topics to be listened for. It essentially
 /// acts as a bandpass filter for the topics you are interested in if

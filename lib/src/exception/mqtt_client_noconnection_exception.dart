@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Exception thrown when the client fails to connect
 class NoConnectionException implements Exception {
   /// Construct

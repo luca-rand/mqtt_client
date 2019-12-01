@@ -5,7 +5,25 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../exception/mqtt_client_invalid_header_exception.dart';
+import '../messages/mqtt_client_mqtt_message_type.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import './connect/mqtt_client_mqtt_connect_message.dart';
+import './connectack/mqtt_client_mqtt_connect_ack_message.dart';
+import './disconnect/mqtt_client_mqtt_disconnect_message.dart';
+import './mqtt_client_mqtt_header.dart';
+import './mqtt_client_mqtt_message.dart';
+import './pingrequest/mqtt_client_mqtt_ping_request_message.dart';
+import './pingresponse/mqtt_client_mqtt_ping_response_message.dart';
+import './publish/mqtt_client_mqtt_publish_message.dart';
+import './publishack/mqtt_client_mqtt_publish_ack_message.dart';
+import './publishcomplete/mqtt_client_mqtt_publish_complete_message.dart';
+import './publishreceived/mqtt_client_mqtt_publish_received_message.dart';
+import './publishrelease/mqtt_client_mqtt_publish_release_message.dart';
+import './subscribe/mqtt_client_mqtt_subscribe_message.dart';
+import './subscribeack/mqtt_client_mqtt_subscribe_ack_message.dart';
+import './unsubscribe/mqtt_client_mqtt_unsubscribe_message.dart';
+import './unsubscribeack/mqtt_client_mqtt_unsubscribe_ack_message.dart';
 
 /// Factory for generating instances of MQTT Messages
 class MqttMessageFactory {

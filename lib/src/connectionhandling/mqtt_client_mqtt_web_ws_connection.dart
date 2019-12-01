@@ -1,12 +1,12 @@
 /*
  * Package : mqtt_client
- * Author : S. Hamblett <steve.hamblett@linux.com>
- * Date   : 14/08/2017
- * Copyright :  S.Hamblett
+ * Author : L. Casonato <hello@lcas.dev>
+ * Date   : 01/12/2019
+ * Copyright :  L. Casonato
  */
 
 import 'dart:async';
-import 'dart:io';
+import 'dart:html';
 import 'dart:typed_data';
 import 'package:event_bus/event_bus.dart' as events;
 import 'package:typed_data/typed_data.dart' as typed;
@@ -18,9 +18,9 @@ import './mqtt_client_mqtt_connection.dart';
 import './mqtt_client_socket.dart';
 
 /// The [WebSocket] implementation of [MqttSocket]
-class MqttWebSocket implements MqttSocket {
+class MqttWebWebSocket implements MqttSocket {
   /// Default constructor
-  MqttWebSocket(this.webSocket);
+  MqttWebWebSocket(this.webSocket);
 
   /// The secure socket to use for communication
   WebSocket webSocket;
@@ -28,25 +28,34 @@ class MqttWebSocket implements MqttSocket {
   /// Listen for messages on the socket
   @override
   StreamSubscription<Uint8List> listen(void Function(List<int>) onData,
-          {void Function(dynamic) onError, void Function() onDone}) =>
-      webSocket.listen(onData, onError: onError, onDone: onDone);
+      {void Function(dynamic) onError, void Function() onDone}) {
+    webSocket.onClose.listen((_) => onDone);
+    webSocket.onError.listen(onError);
+    return webSocket.onMessage
+        .map((message) => (message.data as ByteBuffer).asUint8List())
+        .listen((data) => onData(data));
+  }
 
   /// Add data to the socket
   @override
-  void add(List<int> data) => webSocket.add(data);
+  void add(List<int> data) =>
+      webSocket.sendByteBuffer(Uint8List.fromList(data).buffer);
 
   /// Close the socket
   @override
-  Future<dynamic> close() => webSocket.close();
+  Future<dynamic> close() {
+    webSocket.close(0, 'CLOSING');
+    return Future<void>.value();
+  }
 }
 
 /// The MQTT connection class for the websocket interface
-class MqttWsConnection extends MqttConnection {
+class MqttWebWsConnection extends MqttConnection {
   /// Default constructor
-  MqttWsConnection(events.EventBus eventBus) : super(eventBus);
+  MqttWebWsConnection(events.EventBus eventBus) : super(eventBus);
 
   /// Initializes a new instance of the MqttConnection class.
-  MqttWsConnection.fromConnect(
+  MqttWebWsConnection.fromConnect(
       String server, int port, events.EventBus eventBus)
       : super(eventBus) {
     connect(server, port);
@@ -92,15 +101,18 @@ class MqttWsConnection extends MqttConnection {
         'MqttWsConnection:: WS URL is $uriString, protocols are $protocols');
     try {
       // Connect and save the socket.
-      WebSocket.connect(uriString,
-              protocols: protocols.isNotEmpty ? protocols : null)
-          .then((WebSocket socket) {
-        client = MqttWebSocket(socket);
-        readWrapper = ReadWrapper();
-        messageStream = MqttByteBuffer(typed.Uint8Buffer());
-        startListening();
-        completer.complete();
-      }).catchError((dynamic e) {
+      final WebSocket socket =
+          WebSocket(uriString, protocols.isNotEmpty ? protocols : null);
+      socket.onOpen.listen((Event event) {
+        if (socket.readyState == 1) {
+          socket.binaryType = 'arraybuffer';
+          client = MqttWebWebSocket(socket);
+          readWrapper = ReadWrapper();
+          messageStream = MqttByteBuffer(typed.Uint8Buffer());
+          startListening();
+          completer.complete();
+        }
+      }).onError((dynamic e) {
         onError(e);
         completer.completeError(e);
       });

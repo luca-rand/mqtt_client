@@ -5,7 +5,8 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_buffers.dart' as typed;
+import '../encoding/mqtt_client_mqtt_encoding.dart';
 
 /// Utility class to allow stream like access to a sized byte buffer.
 /// This class is in effect a cut-down implementation of the C# NET

@@ -5,7 +5,30 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+import 'package:event_bus/event_bus.dart' as events;
+import 'package:typed_data/typed_data.dart' as typed;
+import './connectionhandling/mqtt_client_connection_state.dart';
+import './connectionhandling/mqtt_client_mqtt_connection_handler.dart';
+import './connectionhandling/mqtt_client_mqtt_connection_keep_alive.dart';
+import './connectionhandling/mqtt_client_synchronous_mqtt_connection_handler.dart';
+import './exception/mqtt_client_connection_exception.dart';
+import './exception/mqtt_client_invalid_topic_exception.dart';
+import './messages/connect/mqtt_client_mqtt_connect_message.dart';
+import './messages/connect/mqtt_client_mqtt_connect_return_code.dart';
+import './messages/mqtt_client_mqtt_message.dart';
+import './messages/publish/mqtt_client_mqtt_publish_message.dart';
+import './mqtt_client_connection_status.dart';
+import './mqtt_client_constants.dart';
+import './mqtt_client_mqtt_qos.dart';
+import './mqtt_client_mqtt_received_message.dart';
+import './mqtt_client_protocol.dart';
+import './mqtt_client_publication_topic.dart';
+import './mqtt_client_publishing_manager.dart';
+import './mqtt_client_subscription.dart';
+import './mqtt_client_subscription_status.dart';
+import './mqtt_client_subscriptions_manager.dart';
+import './utility/mqtt_client_logger.dart';
 
 /// The client disconnect callback type
 typedef DisconnectCallback = void Function();
@@ -40,9 +63,6 @@ class MqttClient {
   /// If set use a websocket connection, otherwise use the default TCP one
   bool useWebSocket = false;
 
-  /// If set use the alternate websocket implementation
-  bool useAlternateWebSocketImplementation = false;
-
   List<String> _websocketProtocols;
 
   /// User definable websocket protocols. Use this for non default websocket
@@ -57,16 +77,6 @@ class MqttClient {
       _connectionHandler.websocketProtocols = protocols;
     }
   }
-
-  /// If set use a secure connection, note TCP only, do not use for
-  /// secure websockets(wss).
-  bool secure = false;
-
-  /// The security context for secure usage
-  SecurityContext securityContext = SecurityContext.defaultContext;
-
-  /// Callback function to handle bad certificate. if true, ignore the error.
-  bool Function(X509Certificate certificate) onBadCertificate;
 
   /// The Handler that is managing the connection to the remote server.
   MqttConnectionHandler _connectionHandler;
@@ -198,20 +208,10 @@ class MqttClient {
     _clientEventBus = events.EventBus();
     _connectionHandler = SynchronousMqttConnectionHandler(_clientEventBus);
     if (useWebSocket) {
-      _connectionHandler.secure = false;
       _connectionHandler.useWebSocket = true;
-      _connectionHandler.useAlternateWebSocketImplementation =
-          useAlternateWebSocketImplementation;
       if (_websocketProtocols != null) {
         _connectionHandler.websocketProtocols = _websocketProtocols;
       }
-    }
-    if (secure) {
-      _connectionHandler.secure = true;
-      _connectionHandler.useWebSocket = false;
-      _connectionHandler.useAlternateWebSocketImplementation = false;
-      _connectionHandler.securityContext = securityContext;
-      _connectionHandler.onBadCertificate = onBadCertificate;
     }
     _connectionHandler.onDisconnected = _internalDisconnect;
     _connectionHandler.onConnected = onConnected;

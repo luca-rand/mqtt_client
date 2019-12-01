@@ -5,7 +5,8 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_variable_header.dart';
 
 /// Implementation of the variable header for an MQTT Unsubscribe message.
 class MqttUnsubscribeVariableHeader extends MqttVariableHeader {

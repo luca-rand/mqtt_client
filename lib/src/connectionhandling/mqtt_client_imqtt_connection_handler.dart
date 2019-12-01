@@ -5,7 +5,11 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+import '../messages/connect/mqtt_client_mqtt_connect_message.dart';
+import '../messages/mqtt_client_mqtt_message.dart';
+import '../messages/mqtt_client_mqtt_message_type.dart';
+import '../mqtt_client_connection_status.dart';
 
 /// Callback function definitions
 typedef MessageCallbackFunction = bool Function(MqttMessage message);

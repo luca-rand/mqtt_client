@@ -5,7 +5,10 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:typed_data/typed_buffers.dart' as typed;
 
 /// Utility class to assist with the build in of message topic payloads.
 class MqttClientPayloadBuilder {

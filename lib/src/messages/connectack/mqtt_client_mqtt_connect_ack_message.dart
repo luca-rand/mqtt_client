@@ -5,7 +5,12 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../connect/mqtt_client_mqtt_connect_return_code.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
+import './mqtt_client_mqtt_connect_ack_variable_header.dart';
 
 /// Message that indicates a connection acknowledgement.
 class MqttConnectAckMessage extends MqttMessage {

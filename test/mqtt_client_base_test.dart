@@ -549,13 +549,6 @@ void main() {
       final Duration difference = end.difference(start);
       expect(difference.inSeconds, 1);
     }, skip: false);
-    test('Sleep Sync', () {
-      final DateTime start = DateTime.now();
-      MqttUtilities.syncSleep(1);
-      final DateTime end = DateTime.now();
-      final Duration difference = end.difference(start);
-      expect(difference.inSeconds, 1);
-    });
     test('Get Qos Level', () {
       MqttQos qos = MqttUtilities.getQosLevel(0);
       expect(qos, MqttQos.atMostOnce);

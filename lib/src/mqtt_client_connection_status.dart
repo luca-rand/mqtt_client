@@ -5,7 +5,8 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import './connectionhandling/mqtt_client_connection_state.dart';
+import './messages/connect/mqtt_client_mqtt_connect_return_code.dart';
 
 /// Records the status of the last connection attempt
 class MqttClientConnectionStatus {

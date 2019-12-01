@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Library wide logging class
 class MqttLogger {
   /// Log or not

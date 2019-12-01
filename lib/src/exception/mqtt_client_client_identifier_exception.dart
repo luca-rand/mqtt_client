@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../mqtt_client_constants.dart';
 
 /// Exception thrown when a client identifier included in a message is too long.
 class ClientIdentifierException implements Exception {

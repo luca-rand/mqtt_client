@@ -5,7 +5,25 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:event_bus/event_bus.dart' as events;
+import './connectionhandling/mqtt_client_imqtt_connection_handler.dart';
+import './messages/mqtt_client_mqtt_message.dart';
+import './messages/mqtt_client_mqtt_message_type.dart';
+import './messages/subscribe/mqtt_client_mqtt_subscribe_message.dart';
+import './messages/subscribeack/mqtt_client_mqtt_subscribe_ack_message.dart';
+import './messages/unsubscribe/mqtt_client_mqtt_unsubscribe_message.dart';
+import './messages/unsubscribeack/mqtt_client_mqtt_unsubscribe_ack_message.dart';
+import './mqtt_client_events.dart';
+import './mqtt_client_message_identifier_dispenser.dart';
+import './mqtt_client_mqtt_qos.dart';
+import './mqtt_client_mqtt_received_message.dart';
+import './mqtt_client_publication_topic.dart';
+import './mqtt_client_publishing_manager.dart';
+import './mqtt_client_subscription.dart';
+import './mqtt_client_subscription_status.dart';
+import './mqtt_client_subscription_topic.dart';
+import './observable/observable.dart' as observe;
+import './utility/mqtt_client_logger.dart';
 
 /// Subscribed and Unsubscribed callback typedefs
 typedef SubscribeCallback = void Function(String topic);

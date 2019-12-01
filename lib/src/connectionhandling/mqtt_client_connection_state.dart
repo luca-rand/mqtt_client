@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Enumeration that indicates various client connection states
 enum MqttConnectionState {
   /// The MQTT Connection is in the process of disconnecting from the broker.

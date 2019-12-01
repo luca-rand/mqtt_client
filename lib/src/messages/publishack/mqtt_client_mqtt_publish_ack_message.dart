@@ -5,7 +5,11 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
+import './mqtt_client_mqtt_publish_ack_variable_header.dart';
 
 /// Implementation of an MQTT Publish Acknowledgement Message, used to ACK a publish message that has it's QOS set to AtLeast or Exactly Once.
 class MqttPublishAckMessage extends MqttMessage {

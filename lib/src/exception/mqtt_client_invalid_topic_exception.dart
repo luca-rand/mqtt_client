@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Exception thrown when the topic of a message is invalid
 class InvalidTopicException implements Exception {
   /// Construct

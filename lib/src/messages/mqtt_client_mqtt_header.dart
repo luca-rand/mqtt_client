@@ -5,7 +5,14 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_buffers.dart' as typed;
+import '../exception/mqtt_client_invalid_header_exception.dart';
+import '../exception/mqtt_client_invalid_payload_size_exception.dart';
+import '../mqtt_client_constants.dart';
+import '../mqtt_client_mqtt_qos.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import '../utility/mqtt_client_utilities.dart';
+import './mqtt_client_mqtt_message_type.dart';
 
 /// Represents the Fixed Header of an MQTT message.
 class MqttHeader {

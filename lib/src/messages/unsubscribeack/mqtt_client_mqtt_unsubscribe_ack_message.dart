@@ -4,8 +4,11 @@
  * Date   : 19/06/2017
  * Copyright :  S.Hamblett
  */
-
-part of mqtt_client;
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
+import './mqtt_client_mqtt_unsubscribe_ack_variable_header.dart';
 
 /// Implementation of an MQTT Unsubscribe Ack Message.
 class MqttUnsubscribeAckMessage extends MqttMessage {

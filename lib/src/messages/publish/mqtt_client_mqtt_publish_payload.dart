@@ -5,7 +5,11 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_buffers.dart' as typed;
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_payload.dart';
+import './mqtt_client_mqtt_publish_variable_header.dart';
 
 /// Class that contains details related to an MQTT Connect messages payload
 class MqttPublishPayload extends MqttPayload {

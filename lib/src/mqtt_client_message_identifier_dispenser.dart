@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Message identifier handling
 class MessageIdentifierDispenser {
   /// Factory constructor

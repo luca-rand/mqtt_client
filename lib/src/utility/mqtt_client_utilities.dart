@@ -5,7 +5,9 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+
+import '../mqtt_client_mqtt_qos.dart';
 
 /// General library wide utilties
 class MqttUtilities {
@@ -14,11 +16,6 @@ class MqttUtilities {
   static Future<void> asyncSleep(int seconds) =>
       Future<void>.delayed(Duration(seconds: seconds));
 
-  /// Sleep function that block asynchronous activity.
-  /// Time units are seconds
-  static void syncSleep(int seconds) {
-    sleep(Duration(seconds: seconds));
-  }
 
   /// Qos conversion, always use this to get a Qos
   /// enumeration from a value

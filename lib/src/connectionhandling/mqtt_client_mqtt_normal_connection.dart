@@ -5,7 +5,39 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:event_bus/event_bus.dart' as events;
+import 'package:typed_data/typed_data.dart' as typed;
+import '../exception/mqtt_client_noconnection_exception.dart';
+import '../mqtt_client_connection_status.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import './mqtt_client_mqtt_connection.dart';
+import './mqtt_client_socket.dart';
+
+/// The [Socket] implementation of [MqttSocket]
+class MqttNormalSocket implements MqttSocket {
+  /// Default constructor
+  MqttNormalSocket(this.socket);
+
+  /// The secure socket to use for communication
+  Socket socket;
+
+  /// Listen for messages on the socket
+  @override
+  StreamSubscription<Uint8List> listen(void Function(List<int>) onData,
+          {void Function(dynamic) onError, void Function() onDone}) =>
+      socket.listen(onData, onError: onError, onDone: onDone);
+
+  /// Add data to the socket
+  @override
+  void add(List<int> data) => socket.add(data);
+
+  /// Close the socket
+  @override
+  Future<dynamic> close() => socket.close();
+}
 
 /// The MQTT normal(insecure TCP) connection class
 class MqttNormalConnection extends MqttConnection {
@@ -27,13 +59,13 @@ class MqttNormalConnection extends MqttConnection {
     try {
       // Connect and save the socket.
       Socket.connect(server, port).then((dynamic socket) {
-        client = socket;
+        client = MqttNormalSocket(socket);
         readWrapper = ReadWrapper();
         messageStream = MqttByteBuffer(typed.Uint8Buffer());
-        _startListening();
+        startListening();
         completer.complete();
       }).catchError((dynamic e) {
-        _onError(e);
+        onError(e);
         completer.completeError(e);
       });
     } on Exception catch (e) {

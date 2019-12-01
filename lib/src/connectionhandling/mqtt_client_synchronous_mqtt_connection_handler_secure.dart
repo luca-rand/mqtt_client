@@ -7,8 +7,6 @@
 
 import 'dart:async';
 import 'package:event_bus/event_bus.dart' as events;
-import 'package:mqtt_client/src/connectionhandling/mqtt_client_mqtt_web_ws_connection.dart';
-import '../exception/mqtt_client_connection_type_not_supported.dart';
 import '../exception/mqtt_client_noconnection_exception.dart';
 import '../messages/connect/mqtt_client_mqtt_connect_message.dart';
 import '../messages/connect/mqtt_client_mqtt_connect_return_code.dart';
@@ -21,13 +19,13 @@ import '../mqtt_client_events.dart';
 import '../utility/mqtt_client_logger.dart';
 import '../utility/mqtt_client_utilities.dart';
 import './mqtt_client_connection_state.dart';
-import './mqtt_client_mqtt_connection_handler.dart';
-import 'io.dart' if (dart.library.js) 'web.dart';
+import './mqtt_client_mqtt_connection_handler_secure.dart';
+import 'io.dart';
 
 /// Connection handler that performs connections and disconnections to the hostname in a synchronous manner.
-class SynchronousMqttConnectionHandler extends MqttConnectionHandler {
+class SynchronousMqttConnectionHandlerSecure extends MqttConnectionHandlerSecure {
   /// Initializes a new instance of the MqttConnectionHandler class.
-  SynchronousMqttConnectionHandler(this._clientEventBus);
+  SynchronousMqttConnectionHandlerSecure(this._clientEventBus);
 
   /// Max connection attempts
   static const int maxConnectionAttempts = 3;
@@ -49,32 +47,25 @@ class SynchronousMqttConnectionHandler extends MqttConnectionHandler {
       MqttLogger.log(
           'SynchronousMqttConnectionHandler::internalConnect - initiating connection try $connectionAttempts');
       connectionStatus.state = MqttConnectionState.connecting;
-      if (isWeb) {
-        if (useWebSocket) {
+
+      if (useWebSocket) {
+        if (useAlternateWebSocketImplementation) {
           MqttLogger.log(
-              'SynchronousMqttConnectionHandler::internalConnect - websocket selected');
-          connection = MqttWebWsConnection(_clientEventBus);
-          if (websocketProtocols != null) {
-            connection.protocols = websocketProtocols;
-          }
+              'SynchronousMqttConnectionHandler::internalConnect - alternate websocket implementation selected');
+          connection = MqttWs2Connection(securityContext, _clientEventBus);
         } else {
-          MqttLogger.log(
-              'SynchronousMqttConnectionHandler::internalConnect - insecure TCP selected');
-          throw ConnectionTypeNotSupportedException('insecure TCP');
-        }
-      } else {
-        if (useWebSocket) {
           MqttLogger.log(
               'SynchronousMqttConnectionHandler::internalConnect - websocket selected');
           connection = MqttWsConnection(_clientEventBus);
-          if (websocketProtocols != null) {
-            connection.protocols = websocketProtocols;
-          }
-        } else {
-          MqttLogger.log(
-              'SynchronousMqttConnectionHandler::internalConnect - insecure TCP selected');
-          connection = MqttNormalConnection(_clientEventBus);
         }
+        if (websocketProtocols != null) {
+          connection.protocols = websocketProtocols;
+        }
+      } else {
+        MqttLogger.log(
+            'SynchronousMqttConnectionHandler::internalConnect - secure selected');
+        connection = MqttSecureConnection(
+            securityContext, _clientEventBus, onBadCertificate);
       }
       connection.onDisconnected = onDisconnected;
 

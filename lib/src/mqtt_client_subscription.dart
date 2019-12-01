@@ -5,7 +5,9 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import './mqtt_client_mqtt_qos.dart';
+import './mqtt_client_subscription_topic.dart';
+import './observable/observable.dart' as observe;
 
 /// Entity that captures data related to an individual subscription
 class Subscription extends Object

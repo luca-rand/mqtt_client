@@ -5,7 +5,9 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_buffers.dart' as typed;
+
+import './mqtt_client_payload_convertor.dart';
 
 ///  Acts as a pass through for the raw data without doing any conversion.
 class PassthruPayloadConverter implements PayloadConverter<typed.Uint8Buffer> {

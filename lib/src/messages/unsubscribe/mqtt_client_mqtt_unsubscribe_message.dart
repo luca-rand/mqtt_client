@@ -5,7 +5,15 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../mqtt_client_constants.dart';
+import '../../mqtt_client_mqtt_qos.dart';
+import '../../mqtt_client_protocol.dart';
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
+import './mqtt_client_mqtt_unsubscribe_payload.dart';
+import './mqtt_client_mqtt_unsubscribe_variable_header.dart';
 
 /// Implementation of an MQTT Unsubscribe Message.
 class MqttUnsubscribeMessage extends MqttMessage {

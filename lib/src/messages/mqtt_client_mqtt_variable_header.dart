@@ -5,7 +5,12 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../encoding/mqtt_client_mqtt_encoding.dart';
+import '../mqtt_client_constants.dart';
+import '../mqtt_client_protocol.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import './connect/mqtt_client_mqtt_connect_flags.dart';
+import './connect/mqtt_client_mqtt_connect_return_code.dart';
 
 /// Enumeration used by subclasses to tell the variable header what should be read from the underlying stream.
 enum MqttReadWriteFlags {

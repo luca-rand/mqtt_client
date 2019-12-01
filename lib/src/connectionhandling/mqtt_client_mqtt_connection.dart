@@ -5,7 +5,16 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:event_bus/event_bus.dart' as events;
+import 'package:typed_data/typed_data.dart' as typed;
+import '../messages/mqtt_client_mqtt_message.dart';
+import '../mqtt_client.dart';
+import '../mqtt_client_events.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import '../utility/mqtt_client_logger.dart';
+import './mqtt_client_socket.dart';
 
 /// State and logic used to read from the underlying network stream.
 class ReadWrapper {
@@ -29,7 +38,7 @@ class MqttConnection {
   }
 
   /// The socket that maintains the connection to the MQTT broker.
-  dynamic client;
+  MqttSocket client;
 
   /// The read wrapper
   ReadWrapper readWrapper;
@@ -50,20 +59,20 @@ class MqttConnection {
   }
 
   /// Create the listening stream subscription and subscribe the callbacks
-  void _startListening() {
+  void startListening() {
     MqttLogger.log('MqttConnection::_startListening');
     try {
-      client.listen(_onData, onError: _onError, onDone: _onDone);
+      client.listen(_onData, onError: onError, onDone: _onDone);
     } on Exception catch (e) {
       print('MqttConnection::_startListening - exception raised $e');
     }
   }
 
   /// OnData listener callback
-  void _onData(dynamic data) {
+  void _onData(Uint8List data) {
     MqttLogger.log('MqttConnection::_onData');
     // Protect against 0 bytes but should never happen.
-    if (data.length == 0) {
+    if (data.isEmpty) {
       MqttLogger.log('MqttConnection::_ondata - Error - 0 byte message');
       return;
     }
@@ -103,7 +112,7 @@ class MqttConnection {
   }
 
   /// OnError listener callback
-  void _onError(dynamic error) {
+  void onError(dynamic error) {
     _disconnect();
     MqttLogger.log('MqttConnection::_onError - calling disconnected callback');
     onDisconnected();

@@ -5,7 +5,17 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_data.dart' as typed;
+import '../messages/connect/mqtt_client_mqtt_connect_message.dart';
+import '../messages/mqtt_client_mqtt_message.dart';
+import '../messages/mqtt_client_mqtt_message_type.dart';
+import '../mqtt_client.dart';
+import '../mqtt_client_connection_status.dart';
+import '../mqtt_client_events.dart';
+import '../utility/mqtt_client_byte_buffer.dart';
+import '../utility/mqtt_client_logger.dart';
+import './mqtt_client_connection_state.dart';
+import './mqtt_client_imqtt_connection_handler.dart';
 
 ///  This class provides shared connection functionality to connection handler implementations.
 abstract class MqttConnectionHandler implements IMqttConnectionHandler {
@@ -30,32 +40,14 @@ abstract class MqttConnectionHandler implements IMqttConnectionHandler {
   /// Use a websocket rather than TCP
   bool useWebSocket = false;
 
-  /// Alternate websocket implementation.
-  ///
-  /// The Amazon Web Services (AWS) IOT MQTT interface(and maybe others) has a bug that causes it
-  /// not to connect if unexpected message headers are present in the initial GET message during the handshake.
-  /// Since the httpclient classes insist on adding those headers, an alternate method is used to perform the handshake.
-  /// After the handshake everything goes back to the normal websocket class.
-  /// Only use this websocket implementation if you know it is needed by your broker.
-  bool useAlternateWebSocketImplementation = false;
-
   /// User supplied websocket protocols
   List<String> websocketProtocols;
-
-  /// If set use a secure connection, note TCP only, not websocket.
-  bool secure = false;
-
-  /// The security context for secure usage
-  SecurityContext securityContext;
 
   /// Successful connection callback
   ConnectCallback onConnected;
 
   /// Unsolicited disconnection callback
   DisconnectCallback onDisconnected;
-
-  /// Callback function to handle bad certificate. if true, ignore the error.
-  bool Function(X509Certificate certificate) onBadCertificate;
 
   /// Connect to the specific Mqtt Connection.
   @override

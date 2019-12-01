@@ -5,7 +5,8 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import './messages/mqtt_client_mqtt_message.dart';
+import './mqtt_client_publication_topic.dart';
 
 /// The message available event raised by the Connection class
 class MessageAvailable {

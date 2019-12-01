@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../utility/mqtt_client_byte_buffer.dart';
 
 /// Represents the payload (Body) of an MQTT Message.
 abstract class MqttPayload {

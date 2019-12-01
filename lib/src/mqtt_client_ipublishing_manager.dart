@@ -5,7 +5,10 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_buffers.dart' as typed;
+import './mqtt_client_events.dart';
+import './mqtt_client_mqtt_qos.dart';
+import './mqtt_client_publication_topic.dart';
 
 /// Interface that defines how the publishing manager publishes messages to the broker and
 /// how it passed on messages that are received from the broker.

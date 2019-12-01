@@ -5,7 +5,12 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../mqtt_client_mqtt_qos.dart';
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../../utility/mqtt_client_utilities.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_payload.dart';
+import '../mqtt_client_mqtt_variable_header.dart';
 
 /// Class that contains details related to an MQTT Subscribe Ack messages payload
 class MqttSubscribeAckPayload extends MqttPayload {

@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'package:typed_data/typed_buffers.dart' as typed;
 
 ///     Interface that defines the methods and properties that must be provided by classes
 ///     that interpret and convert inbound and outbound published message data.

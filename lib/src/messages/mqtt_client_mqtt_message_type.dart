@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// An enumeration of all available MQTT Message Types
 enum MqttMessageType {
   /// Reserved by the MQTT spec, should not be used.

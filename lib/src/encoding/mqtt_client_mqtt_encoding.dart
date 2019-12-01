@@ -5,7 +5,10 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:convert';
+import 'package:typed_data/typed_buffers.dart' as typed;
+import '../mqtt_client_constants.dart';
+import '../mqtt_client_protocol.dart';
 
 /// Encoding implementation that can encode and decode strings in the MQTT string format.
 ///

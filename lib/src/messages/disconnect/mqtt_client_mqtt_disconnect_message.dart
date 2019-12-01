@@ -5,7 +5,9 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
 
 /// Implementation of an MQTT Disconnect Message.
 class MqttDisconnectMessage extends MqttMessage {

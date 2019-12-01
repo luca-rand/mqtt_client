@@ -5,7 +5,11 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
+import './mqtt_client_mqtt_publish_complete_variable_header.dart';
 
 /// Implementation of an MQTT Publish Complete Message.
 class MqttPublishCompleteMessage extends MqttMessage {

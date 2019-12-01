@@ -5,7 +5,14 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../mqtt_client_mqtt_qos.dart';
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../mqtt_client_mqtt_header.dart';
+import '../mqtt_client_mqtt_message.dart';
+import '../mqtt_client_mqtt_message_type.dart';
+import './mqtt_client_mqtt_subscribe_ack_payload.dart';
+import './mqtt_client_mqtt_subscribe_ack_variable_header.dart';
+
 
 /// Implementation of an MQTT Subscribe Ack Message.
 class MqttSubscribeAckMessage extends MqttMessage {

@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Enumeration of available QoS types.
 enum MqttQos {
   /// QOS Level 0 - Message is not guaranteed delivery. No retries are made to ensure delivery is successful.

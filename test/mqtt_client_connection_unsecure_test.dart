@@ -38,7 +38,6 @@ void main() {
   group('Connection Keep Alive - Mock tests', () {
     // Group setup
     final MockCH ch = MockCH();
-    when(ch.secure).thenReturn(false);
     final MockKA ka = MockKA(ch, 3);
     test('Message sent', () {
       final MqttMessage msg = MqttPingRequestMessage();

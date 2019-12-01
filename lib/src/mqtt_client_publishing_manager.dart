@@ -5,7 +5,22 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import 'dart:async';
+import 'package:event_bus/event_bus.dart' as events;
+import 'package:typed_data/typed_data.dart' as typed;
+import './connectionhandling/mqtt_client_imqtt_connection_handler.dart';
+import './messages/mqtt_client_mqtt_message.dart';
+import './messages/mqtt_client_mqtt_message_type.dart';
+import './messages/publish/mqtt_client_mqtt_publish_message.dart';
+import './messages/publishack/mqtt_client_mqtt_publish_ack_message.dart';
+import './messages/publishcomplete/mqtt_client_mqtt_publish_complete_message.dart';
+import './messages/publishreceived/mqtt_client_mqtt_publish_received_message.dart';
+import './messages/publishrelease/mqtt_client_mqtt_publish_release_message.dart';
+import './mqtt_client_events.dart';
+import './mqtt_client_ipublishing_manager.dart';
+import './mqtt_client_message_identifier_dispenser.dart';
+import './mqtt_client_mqtt_qos.dart';
+import './mqtt_client_publication_topic.dart';
 
 /// Handles the logic and workflow surrounding the message publishing and receipt process.
 ///

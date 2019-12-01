@@ -5,7 +5,13 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import '../../encoding/mqtt_client_mqtt_encoding.dart';
+import '../../exception/mqtt_client_client_identifier_exception.dart';
+import '../../mqtt_client_constants.dart';
+import '../../utility/mqtt_client_byte_buffer.dart';
+import '../../utility/mqtt_client_logger.dart';
+import '../mqtt_client_mqtt_payload.dart';
+import './mqtt_client_mqtt_connect_variable_header.dart';
 
 /// Class that contains details related to an MQTT Connect messages payload.
 class MqttConnectPayload extends MqttPayload {

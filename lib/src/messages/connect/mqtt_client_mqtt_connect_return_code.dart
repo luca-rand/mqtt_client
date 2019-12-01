@@ -5,8 +5,6 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
-
 /// Enumeration of allowable connection request return codes.
 enum MqttConnectReturnCode {
   /// Connection accepted

@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-part of mqtt_client;
+import './mqtt_client_constants.dart';
 
 /// Protocol selection helper class, protocol defaults V3.1
 class Protocol {

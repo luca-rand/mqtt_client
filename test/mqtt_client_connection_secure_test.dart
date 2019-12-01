@@ -6,7 +6,7 @@
  */
 
 import 'dart:io';
-import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_client_secure.dart';
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:typed_data/typed_data.dart' as typed;
@@ -14,8 +14,7 @@ import 'package:path/path.dart' as path;
 import 'package:event_bus/event_bus.dart' as events;
 import 'support/mqtt_client_mockbroker.dart';
 
-// Mock classes
-class MockCH extends Mock implements MqttConnectionHandler {
+class MockCHS extends Mock implements MqttConnectionHandlerSecure {
   @override
   MqttClientConnectionStatus connectionStatus = MqttClientConnectionStatus();
 }
@@ -38,8 +37,7 @@ void main() {
 
   group('Connection Keep Alive - Mock tests', () {
     // Group setup
-    final MockCH ch = MockCH();
-    when(ch.secure).thenReturn(true);
+    final MockCHS ch = MockCHS();
     final MockKA ka = MockKA(ch, 3);
     test('Message sent', () {
       final MqttMessage msg = MqttPingRequestMessage();
@@ -74,9 +72,8 @@ void main() {
   group('Synchronous MqttConnectionHandler', () {
     test('Connect to bad host name', () async {
       final events.EventBus clientEventBus = events.EventBus();
-      final SynchronousMqttConnectionHandler ch =
-          SynchronousMqttConnectionHandler(clientEventBus);
-      ch.secure = true;
+      final SynchronousMqttConnectionHandlerSecure ch =
+          SynchronousMqttConnectionHandlerSecure(clientEventBus);
       try {
         await ch.connect(nonExistantHostName, mockBrokerPort,
             MqttConnectMessage().withClientIdentifier(testClientId));
@@ -93,9 +90,8 @@ void main() {
       }
 
       final events.EventBus clientEventBus = events.EventBus();
-      final SynchronousMqttConnectionHandler ch =
-          SynchronousMqttConnectionHandler(clientEventBus);
-      ch.secure = true;
+      final SynchronousMqttConnectionHandlerSecure ch =
+          SynchronousMqttConnectionHandlerSecure(clientEventBus);
       ch.onDisconnected = disconnectCB;
       try {
         await ch.connect(mockBrokerAddress, badPort,
@@ -143,9 +139,8 @@ void main() {
 
       await broker.start();
       final events.EventBus clientEventBus = events.EventBus();
-      final SynchronousMqttConnectionHandler ch =
-          SynchronousMqttConnectionHandler(clientEventBus);
-      ch.secure = true;
+      final SynchronousMqttConnectionHandlerSecure ch =
+          SynchronousMqttConnectionHandlerSecure(clientEventBus);
       final SecurityContext context = SecurityContext.defaultContext;
       final String currDir = path.current + path.separator;
       context.setTrustedCertificates(
@@ -179,9 +174,8 @@ void main() {
       broker.pemName = 'self_signed';
       await broker.start();
       final events.EventBus clientEventBus = events.EventBus();
-      final SynchronousMqttConnectionHandler ch =
-          SynchronousMqttConnectionHandler(clientEventBus);
-      ch.secure = true;
+      final SynchronousMqttConnectionHandlerSecure ch =
+          SynchronousMqttConnectionHandlerSecure(clientEventBus);
       ch.onDisconnected = disconnectCB;
       final SecurityContext context = SecurityContext();
       final String currDir = path.current + path.separator;
@@ -202,9 +196,8 @@ void main() {
       broker.pemName = 'self_signed';
       await broker.start();
       final events.EventBus clientEventBus = events.EventBus();
-      final SynchronousMqttConnectionHandler ch =
-          SynchronousMqttConnectionHandler(clientEventBus);
-      ch.secure = true;
+      final SynchronousMqttConnectionHandlerSecure ch =
+          SynchronousMqttConnectionHandlerSecure(clientEventBus);
       // Skip bad certificate
       ch.onBadCertificate = (_) => true;
       final SecurityContext context = SecurityContext();
