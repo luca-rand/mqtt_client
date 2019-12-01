@@ -27,9 +27,10 @@ class MqttSecureSocket implements MqttSocket {
 
   /// Listen for messages on the socket
   @override
-  StreamSubscription<Uint8List> listen(void Function(List<int>) onData,
+  void listen(void Function(List<int>) onData,
           {void Function(dynamic) onError, void Function() onDone}) =>
-      secureSocket.listen(onData, onError: onError, onDone: onDone);
+      secureSocket.listen((dynamic x) => onData(x),
+          onError: onError, onDone: onDone);
 
   /// Add data to the socket
   @override

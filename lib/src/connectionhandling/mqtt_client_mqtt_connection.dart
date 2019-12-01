@@ -16,6 +16,16 @@ import '../utility/mqtt_client_byte_buffer.dart';
 import '../utility/mqtt_client_logger.dart';
 import './mqtt_client_socket.dart';
 
+/// The default websocket subprotocol list
+const List<String> protocolsMultipleDefault = <String>[
+  'mqtt',
+  'mqttv3.1',
+  'mqttv3.11'
+];
+
+/// The default websocket subprotocol list for brokers who expect this field to be a single entry
+const List<String> protocolsSingleDefault = <String>['mqtt'];
+
 /// State and logic used to read from the underlying network stream.
 class ReadWrapper {
   /// Creates a new ReadWrapper that wraps the state used to read a message from a stream.
@@ -69,7 +79,7 @@ class MqttConnection {
   }
 
   /// OnData listener callback
-  void _onData(Uint8List data) {
+  void _onData(List<int> data) {
     MqttLogger.log('MqttConnection::_onData');
     // Protect against 0 bytes but should never happen.
     if (data.isEmpty) {

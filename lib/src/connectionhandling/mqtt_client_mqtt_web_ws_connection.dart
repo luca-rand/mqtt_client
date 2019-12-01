@@ -27,11 +27,11 @@ class MqttWebWebSocket implements MqttSocket {
 
   /// Listen for messages on the socket
   @override
-  StreamSubscription<Uint8List> listen(void Function(List<int>) onData,
+  void listen(void Function(List<int>) onData,
       {void Function(dynamic) onError, void Function() onDone}) {
     webSocket.onClose.listen((_) => onDone);
     webSocket.onError.listen(onError);
-    return webSocket.onMessage
+    webSocket.onMessage
         .map((message) => (message.data as ByteBuffer).asUint8List())
         .listen((data) => onData(data));
   }
@@ -60,16 +60,6 @@ class MqttWebWsConnection extends MqttConnection {
       : super(eventBus) {
     connect(server, port);
   }
-
-  /// The default websocket subprotocol list
-  static const List<String> protocolsMultipleDefault = <String>[
-    'mqtt',
-    'mqttv3.1',
-    'mqttv3.11'
-  ];
-
-  /// The default websocket subprotocol list for brokers who expect this field to be a single entry
-  static const List<String> protocolsSingleDefault = <String>['mqtt'];
 
   /// The websocket subprotocol list
   List<String> protocols = protocolsMultipleDefault;

@@ -11,7 +11,7 @@ import 'dart:typed_data';
 /// The socket used for communication
 abstract class MqttSocket {
   /// Listen for messages on the socket
-  StreamSubscription<Uint8List> listen(void Function(List<int>) onData,
+  void listen(void Function(List<int>) onData,
           {void Function(dynamic) onError, void Function() onDone}) =>
       null;
 

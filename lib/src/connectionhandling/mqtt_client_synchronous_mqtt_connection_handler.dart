@@ -7,7 +7,6 @@
 
 import 'dart:async';
 import 'package:event_bus/event_bus.dart' as events;
-import 'package:mqtt_client/src/connectionhandling/mqtt_client_mqtt_web_ws_connection.dart';
 import '../exception/mqtt_client_connection_type_not_supported.dart';
 import '../exception/mqtt_client_noconnection_exception.dart';
 import '../messages/connect/mqtt_client_mqtt_connect_message.dart';
