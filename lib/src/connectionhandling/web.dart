@@ -6,8 +6,7 @@
  */
 
 import 'package:event_bus/event_bus.dart' as events;
-import './mqtt_client_mqtt_connection.dart';
-export './mqtt_client_mqtt_normal_connection.dart';
+export './mqtt_client_mqtt_web_ws_connection.dart';
 
 class MqttNormalConnection {
   /// Default constructor
