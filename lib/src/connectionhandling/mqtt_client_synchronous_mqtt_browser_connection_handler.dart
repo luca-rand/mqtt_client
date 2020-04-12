@@ -31,7 +31,7 @@ class SynchronousMqttBrowserConnectionHandler
   bool Function(dynamic certificate) onBadCertificate;
 
   /// Max connection attempts
-  static const int maxConnectionAttempts = 3;
+  static const int maxConnectionAttempts = 1;
 
   /// The broker connection acknowledgment timer
   MqttCancellableAsyncSleep _connectTimer;
