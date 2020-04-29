@@ -46,7 +46,7 @@ abstract class MqttConnectionHandlerBase implements IMqttConnectionHandler {
   bool Function(dynamic certificate) onBadCertificate;
 
   /// Max connection attempts
-  static const int maxConnectionAttempts = 3;
+  static const int maxConnectionAttempts = 1;
 
   /// The broker connection acknowledgment timer
   @protected
