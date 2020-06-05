@@ -90,7 +90,8 @@ abstract class MqttConnectionHandlerBase implements IMqttConnectionHandler {
     try {
       await internalConnect(server, port, message);
       return connectionStatus;
-    } on Exception {
+    } on Exception catch (e) {
+      connection.onError(e);
       connectionStatus.state = MqttConnectionState.faulted;
       rethrow;
     }
